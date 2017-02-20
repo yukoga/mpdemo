@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+env/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+
+*.log
+
+lib/
+*.internal
+/secrets.tar.gz
+/secrets.tar
+/client-secret.json
+/service-account.json
+
+.git/
+.project
+.pydevproject
+.settings/
+.idea/
+
+# credentials.
+*.p12
+.ipynb_checkpoints/
