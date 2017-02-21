@@ -2,6 +2,9 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import division
 from __future__ import absolute_import
+from logging import getLogger, StreamHandler
+from logging import CRITICAL, DEBUG, ERROR, FATAL, INFO, NOTSET, WARNING
+import logging
 
 import requests
 import sys
@@ -23,12 +26,16 @@ except ImportError:
 
 class Tracker(object):
 
-    def __init__(self, tracking_id=None, log=False):
+    def __init__(
+            self,
+            tracking_id=None,
+            output=False,
+            log_level='NOTSET',
+            output_handler=StreamHandler):
         self.tracking_id = tracking_id
         self.version = 1
         self.aip = 1
         self.endpoint = 'https://www.google-analytics.com/collect'
-        self.show_log = log
         self.message = {
             'success':
                 '%d : Succeeded to send Measurement Protocol as follows:',
@@ -36,8 +43,17 @@ class Tracker(object):
                 '%d : Failed to send Measurement Protocol.'
                 'See following requests:'
         }
+        self.output = output,
+        self.log_level = log_level
+        level = getattr(logging, self.log_level)
+        if level > 0:
+            logging.basicConfig(level=level)
+            self.logger = getLogger(__name__)
+            handler = output_handler()
+            handler.setLevel(level)
+            self.logger.setLevel(level)
 
-    def log(self, message, data):
+    def show_message(self, message, data):
         print(message)
         print(data)
 
@@ -52,8 +68,9 @@ class Tracker(object):
             message = self.message['success'] % status
         else:
             message = self.message['failure'] % status
-        if self.show_log:
-            self.log(message, data)
+        if self.output:
+            self.show_message(message, data)
+        return status
 
     def get_payload(self, client_id=None, hit_type=None, data=None):
         if hit_type not in ['pageview', 'event']:
@@ -88,7 +105,7 @@ class Tracker(object):
         if params:
             data.update(params)
         data = self.get_payload(client_id, 'pageview', data)
-        self.send_request(data)
+        return self.send_request(data)
 
     def send_event(
             self,
@@ -112,4 +129,4 @@ class Tracker(object):
         if params:
             data.update(params)
         data = self.get_payload(client_id, 'event', data)
-        self.send_request(data)
+        return self.send_request(data)

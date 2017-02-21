@@ -6,7 +6,7 @@ from mpdemo.tracker import Tracker
 def mpsample():
     d = dict()
     d['tracking_id'] = 'UA-123456-78'
-    d['log'] = True
+    d['log_level'] = 'INFO'
     d['pageview'] = {
         'page': '/test/for/Measurement/Protocol/index.html',
         'title': 'This is Measurement Protocol test - 日本語'
@@ -23,7 +23,7 @@ def mpsample():
         'title': 'This is Measurement Protocol test - 日本語',
         'params': {'cd1': 'dimension1 value - カスタム ディメンション１'}
     }
-    d['tracker'] = Tracker(d['tracking_id'], log=d['log'])
+    d['tracker'] = Tracker(d['tracking_id'], log_level=d['log_level'])
     return d
 
 
@@ -32,7 +32,6 @@ def test_send_pageview(mpsample):
     'dt': 'This is Measurement Protocol test - 日本語',
     'cid': 12345, 't': 'pageview',
     'dp': '/test/for/Measurement/Protocol/index.html', 'aip': 1}'''
-    # assert payload == mpsample['tracker'].send_pageview(
-    assert None is mpsample['tracker'].send_pageview(
+    assert 200 == mpsample['tracker'].send_pageview(
         12345, page=mpsample['pageview']['page'],
         title=mpsample['pageview']['title'])
