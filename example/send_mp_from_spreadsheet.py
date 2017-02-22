@@ -7,6 +7,7 @@ from mpdemo.util import get_credentials, get_service
 from mpdemo.tracker import Tracker
 from mpdemo.model_google_sheet import SpreadSheet
 
+TRACKING_ID = 'UA-XXXXXX-YY' # please change to your tracking id. 
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
 discoveryUrl = 'https://sheets.googleapis.com/$discovery/rest?version=v4'
 credential = get_credentials('service-account.json', scopes=SCOPES)
@@ -28,7 +29,7 @@ for p, f in zip(params, fields):
     else:
         param_dict.update({p: f})
 
-tracker = Tracker(tracking_id='UA-48400818-3', output=True)
+tracker = Tracker(tracking_id=TRACKING_ID, output=True)
 
 print(param_dict)
 
