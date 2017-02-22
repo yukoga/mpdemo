@@ -32,10 +32,6 @@ for p, f in zip(params, fields):
         param_dict.update({p: f})
 
 tracker = Tracker(tracking_id=TRACKING_ID, output=True)
-
-print(param_dict)
-
 for i, row in df.iterrows():
     params = { k: row[param_dict[k]] for k in param_dict}
-
     tracker.send_event(params=params)
