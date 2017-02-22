@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
     name='mpdemo',
-    version='0.0.1',
+    version='0.0.2',
     description='Google Analytics Measurement Protocol helper library.',
     license='no',
     author='yukoga',

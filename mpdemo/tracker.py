@@ -76,7 +76,7 @@ class Tracker(object):
         if hit_type not in ['pageview', 'event']:
             raise ValueError(
                 'hit_type must be pageview or event.')
-        if not client_id:
+        if not client_id and not 'cid' in data:
             raise ValueError(
                 'Required parameter client_id isn\'t set.')
         payload = {
@@ -96,12 +96,15 @@ class Tracker(object):
             page=None,
             title=None,
             params=None):
+        data = dict()
         if not all([client_id, page]):
-            raise ValueError(
-                'Both client_id and page are required.')
-        if not title:
-            title = ' '.join(page.split('/')[1:])
-        data = dict({'dp': page, 'dt': title})
+            if not all([v in params for v in ['cid', 'dp']]):
+                raise ValueError(
+                    'Both client_id and page are required.')
+        else:
+            if not title:
+                title = ' '.join(page.split('/')[1:])
+            data.update({'dp': page, 'dt': title})
         if params:
             data.update(params)
         data = self.get_payload(client_id, 'pageview', data)
@@ -116,10 +119,13 @@ class Tracker(object):
             value=None,
             non_interaction=False,
             params=None):
+        data = dict()
         if not all([client_id, category, action]):
-            raise ValueError(
-                'All client_id, category and action are required.')
-        data = dict({'ec': category, 'ea': action})
+            if not all([v in params for v in ['cid', 'ec', 'ea']]):
+                raise ValueError(
+                    'All client_id, category and action are required.')
+        else:
+            data.update({'ec': category, 'ea': action})
         if label:
             data.update({'el': label})
         if value:
