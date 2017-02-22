@@ -12,7 +12,10 @@ from oauth2client.file import Storage
 from oauth2client.service_account import ServiceAccountCredentials
 
 
-def get_credentials(keyfile_path=None, scopes=None, credential_file='credentials-googleapis.json'):
+def get_credentials(
+        keyfile_path=None,
+        scopes=None,
+        credential_file='credentials-googleapis.json'):
     """Gets valid user credentials from storage.
 
     If nothing has been stored, or if the stored credentials are invalid,
@@ -30,11 +33,20 @@ def get_credentials(keyfile_path=None, scopes=None, credential_file='credentials
     store = Storage(credential_path)
     credentials = store.get()
     if not credentials or credentials.invalid:
-      credentials = ServiceAccountCredentials.from_json_keyfile_name(keyfile_path, scopes=scopes)
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(
+            keyfile_path, scopes=scopes)
     return credentials
 
-def get_service(credentials=None, discoveryUrl=None, service_name=None, version=None):
-    http = credentials.authorize(httplib2.Http())
-    service = discovery.build(service_name, version, http=http, discoveryServiceUrl=discoveryUrl)
-    return service
 
+def get_service(
+        credentials=None,
+        discoveryUrl=None,
+        service_name=None,
+        version=None):
+    http = credentials.authorize(httplib2.Http())
+    service = discovery.build(
+        service_name,
+        version,
+        http=http,
+        discoveryServiceUrl=discoveryUrl)
+    return service

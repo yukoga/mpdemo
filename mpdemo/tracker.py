@@ -76,7 +76,7 @@ class Tracker(object):
         if hit_type not in ['pageview', 'event']:
             raise ValueError(
                 'hit_type must be pageview or event.')
-        if not client_id and not 'cid' in data:
+        if not client_id and 'cid' not in data:
             raise ValueError(
                 'Required parameter client_id isn\'t set.')
         payload = {
