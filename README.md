@@ -20,9 +20,7 @@ Please take a look at following document to get service account keyfile.
 
 ## How to install & use sample script   
 1. pip install git+https://github.com/yukoga/mpdemo.git  
-2. Download sample script from
-   https://github.com/yukoga/mpdemo/blob/master/example/send_mp_from_spreadsheet.py
-   and locate it into a directory where service account keyfile exists. 
+2. Download sample script from https://raw.githubusercontent.com/yukoga/mpdemo/master/example/send_mp_from_spreadsheet.py and locate it into a directory where service account keyfile exists. 
 3. Set your own value into the following parameters in the sample script.  
     - tracking id ( TRACKING_ID ) 
     - spreadsheet URL ( SHEET_URL )  
