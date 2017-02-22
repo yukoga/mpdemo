@@ -9,15 +9,17 @@ from mpdemo.model_google_sheet import SpreadSheet
 
 TRACKING_ID = 'UA-XXXXXX-YY' # please change to your tracking id. 
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
+SHEET_URL = '<YOUR_SPREADSHEET_URL_HERE>'
+RANGE = '<YOUR_SHEET_RANGE_HERE>'
+KEY_FILE = '<YOUR_KEY_FILE_PATH_HERE>'
+
 discoveryUrl = 'https://sheets.googleapis.com/$discovery/rest?version=v4'
-credential = get_credentials('service-account.json', scopes=SCOPES)
+credential = get_credentials(KEY_FILE, scopes=SCOPES)
 service = get_service(credential, discoveryUrl=discoveryUrl, service_name='sheets', version='v4')
 
-sheet_url = '<YOUR_SPREADSHEET_URL_HERE>'
-rangeName = '<YOUR_SHEET_RANGE_HERE>'
 sheet1 = SpreadSheet(service)
 
-df = sheet1.get_values(url=sheet_url, sheet_range=rangeName, to_dataframe=True)
+df = sheet1.get_values(url=SHEET_URL, sheet_range=RANGE, to_dataframe=True)
 params = df[0:1].values[0]
 df = df.shift(-1)[:-1]
 fields = df.columns.values
