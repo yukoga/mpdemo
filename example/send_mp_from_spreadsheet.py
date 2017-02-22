@@ -16,3 +16,4 @@ sheet_url = "https://docs.google.com/spreadsheets/d/1lxBu7Zhl8X1ImqvrNFxhYGDGHGY
 rangeName = 'new CRM!A1:J'
 
 df = sheet1.get_values(id=spreadsheetId, sheet_range=rangeName, to_dataframe=True)
+df.head()
