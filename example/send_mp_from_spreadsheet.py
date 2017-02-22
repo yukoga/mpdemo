@@ -13,8 +13,8 @@ discoveryUrl = 'https://sheets.googleapis.com/$discovery/rest?version=v4'
 credential = get_credentials('service-account.json', scopes=SCOPES)
 service = get_service(credential, discoveryUrl=discoveryUrl, service_name='sheets', version='v4')
 
-sheet_url = "https://docs.google.com/spreadsheets/d/1lxBu7Zhl8X1ImqvrNFxhYGDGHGYJkY2nDSYBZioJ5XU/edit#gid=284780649"
-rangeName = 'new CRM!A1:J'
+sheet_url = '<YOUR_SPREADSHEET_URL_HERE>'
+rangeName = '<YOUR_SHEET_RANGE_HERE>'
 sheet1 = SpreadSheet(service)
 
 df = sheet1.get_values(url=sheet_url, sheet_range=rangeName, to_dataframe=True)

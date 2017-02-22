@@ -23,6 +23,6 @@ Please take a look at following document to get service account keyfile.
 2. Download sample script from
    https://github.com/yukoga/mpdemo/blob/master/example/send_mp_from_spreadsheet.py
    and locate it into a directory where service account keyfile exists. 
-3. Modify tracking id (TRACKING_ID) and spreadsheet URL (sheet_url) in the send_mp_from_spreadsheet.py  
+3. Modify tracking id (TRACKING_ID), spreadsheet URL (sheet_url) and sheet range (rangeName) in the send_mp_from_spreadsheet.py  
 4. Execute sample script as follows:  
   - python send_mp_from_spreadsheet.py
