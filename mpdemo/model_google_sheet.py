@@ -22,9 +22,10 @@ class SpreadSheet(object):
             to_dataframe=False):
         if not any([url, id]):
             raise ValueError('Spreadsheet url or id will be requred.')
-        self.id = url.split('/')[5] if not id else id
+#        self.id = url.split('/')[5] if not id else id
+        id = url.split('/')[5] if not id else id
         result = self.sheets.values().get(
-            spreadsheetId=self.id, range=sheet_range).execute()
+            spreadsheetId=id, range=sheet_range).execute()
         values = result.get('values', [])
         if to_dataframe:
             headers, values = values[0], values[1:]
@@ -47,11 +48,42 @@ class SpreadSheet(object):
 
     def update(
             self,
-            data=None,
+            url=None,
+            id=None,
             sheet_range=None,
+            data=None,
             value_input_option='USER_ENTERED',
-            major_dimension='ROW',
-            includeValuesInResponse='false',
+            main_dimension='ROWS',
+            include_values_in_response='true',
             response_value_render_option='FORMATTED_VALUE',
             response_datetime_render_option='SERIAL_NUMBER'):
-        pass
+        if not any([url, id]):
+            raise ValueError('Spreadsheet url or id will be requred.')
+        id = url.split('/')[5] if not id else id
+        if not all([data.empty, sheet_range]):
+            ValueError('data, sheet_range and id ( i.e. spreadsheetId ) will be required.')
+        if isinstance(data, pd.DataFrame):
+            values = data.values.tolist()
+            values.insert(0, data.columns.tolist())
+        else:
+            values = data
+        request_body = {
+            'valueInputOption': value_input_option,
+            'data': [
+                {
+                    "range": sheet_range,
+                    'majorDimension': main_dimension,
+                    'values': values
+                }
+            ],
+            'includeValuesInResponse': include_values_in_response,
+            'responseValueRenderOption': response_value_render_option,
+            'responseDateTimeRenderOption': response_datetime_render_option
+        }
+        result = self.sheets.values().batchUpdate(
+            spreadsheetId=id, body=request_body).execute()
+        if 'error' in result:
+            code, message, status = result['error']['code']*1, result['error']['message'], result['error']['status']
+        else:
+            code = 200
+        return code

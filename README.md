@@ -19,7 +19,7 @@ Please take a look at following document to get service account keyfile.
     - [Google Sheets API - Python Quickstart](https://developers.google.com/sheets/api/quickstart/python)
 
 ## How to install & use sample script   
-1. pip install git+https://github.com/yukoga/mpdemo.git  
+1. pip install git+https://github.com/yukoga/mpdemo.git@latest  
 2. Download sample script from https://raw.githubusercontent.com/yukoga/mpdemo/master/example/send_mp_from_spreadsheet.py and locate it into a directory where service account keyfile exists. 
 3. Set your own value into the following parameters in the sample script.  
     - tracking id ( TRACKING_ID ) 
