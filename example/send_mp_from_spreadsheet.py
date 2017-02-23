@@ -23,10 +23,11 @@ service = get_service(
 
 sheet1 = SpreadSheet(service)
 
-df = sheet1.get_values(url=SHEET_URL, sheet_range=RANGE, to_dataframe=True)
-params = df[0:1].values[0]
-df = df.shift(-1)[:-1]
-fields = df.columns.values
+df_orig = sheet1.get_values(url=SHEET_URL, sheet_range=RANGE, to_dataframe=True)
+params = df_orig.values[0]
+params = [v for v in params if v]
+df = df_orig.shift(-1)[:-1]
+fields = df.columns.values[1:]
 param_dict = dict({})
 for p, f in zip(params, fields):
     if ',' in p:
@@ -38,4 +39,9 @@ for p, f in zip(params, fields):
 tracker = Tracker(tracking_id=TRACKING_ID, output=True)
 for i, row in df.iterrows():
     params = {k: row[param_dict[k]] for k in param_dict}
-    tracker.send_event(params=params)
+    status = tracker.send_event(params=params)
+    if status in range(200, 300):
+        df_orig.loc[i+1, 'lastupdate'] = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+
+updated = sheet1.update(url=SHEET_URL, sheet_range=RANGE, data=df_orig)
+print("update has been done. : ", updated)
