@@ -30,20 +30,23 @@ tracker = Tracker(tracking_id='UA-XXXXXXX-YY', output=True)
 
 # send pageview.
 params = {
-  'client_id': '1234567.8901234',
-  'page': '/some/page/path.html'
+  'cd1': 'This is custom dimension 1 value.',
+  'cg1': 'Measurement Protocol parameters other thatn cid and dp is set as params.'
 }
-tracker.send_pageview(params);
+tracker.send_pageview(client_id='12345.67890',
+                      page='/some/page/path.html', params=params);
 
 # send event
 params = {
-  'client_id': '1234567.8901234',
-  'category': 'offline tracking',
-  'action': 'offline purchase',
-  'label': 'some_product_name',
-  'value': 10000
+  'cd1': 'This is custom dimension 1 value.',
+  'cg1': 'Measurement Protocol parameters other thatn cid and dp is set as params.'
 }
-tracker.send_event(params)
+tracker.send_event(client_id='12345.67890',
+                   category='offline tracking',
+                   action='store visit',
+                   label='store name',
+                   value=10000,
+                   params=params);
 ```
 
 ## Sample script usage  
