@@ -25,6 +25,8 @@ pip install git+https://github.com/yukoga/mpdemo.git
 mpdemo module support for sending pageview and event hit by send_pageview()
 and send_event() method. Here is sample implementations. 
 ```python
+from mpdemo.tracker import Tracker
+
 # Instantiate tracker object.  
 tracker = Tracker(tracking_id='UA-XXXXXXX-YY', output=True)
 
